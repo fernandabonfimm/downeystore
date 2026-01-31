@@ -2,23 +2,23 @@ namespace RestaurantQueue.Models;
 
 public class Order
 {
-    public Guid Id { get; init; }
-    public Guid ConsumerId { get; init; }
-    public IReadOnlyList<Guid> ProductIds { get; init; } = Array.Empty<Guid>();
+    public int Id { get; init; }
+    public int ConsumerId { get; init; }
+    public IReadOnlyList<int> ProductIds { get; init; } = Array.Empty<int>();
     public decimal TotalAmount { get; init; }
-    public Guid PaymentId { get; init; }
+    public int PaymentId { get; init; }
     public DateTime CreatedAt { get; init; }
     public string Status { get; init; } = string.Empty;
 
     public Order()
     {
-        Id = Guid.NewGuid();
+        Id = 0;
         CreatedAt = DateTime.UtcNow;
     }
 
-    public Order(Guid consumerId, IReadOnlyList<Guid> productIds, decimal totalAmount, Guid paymentId)
+    public Order(int id, int consumerId, IReadOnlyList<int> productIds, decimal totalAmount, int paymentId)
     {
-        Id = Guid.NewGuid();
+        Id = id;
         ConsumerId = consumerId;
         ProductIds = productIds;
         TotalAmount = totalAmount;
@@ -27,3 +27,4 @@ public class Order
         Status = "Pending";
     }
 }
+

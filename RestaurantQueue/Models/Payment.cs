@@ -2,22 +2,23 @@ namespace RestaurantQueue.Models;
 
 public class Payment
 {
-    public Guid Id { get; init; }
+    public int Id { get; init; }
     public string Method { get; init; } = string.Empty;
     public decimal Amount { get; init; }
     public DateTime ProcessedAt { get; init; }
 
     public Payment()
     {
-        Id = Guid.NewGuid();
+        Id = 0;
         ProcessedAt = DateTime.UtcNow;
     }
 
-    public Payment(string method, decimal amount)
+    public Payment(int id, string method, decimal amount)
     {
-        Id = Guid.NewGuid();
+        Id = id;
         Method = method;
         Amount = amount;
         ProcessedAt = DateTime.UtcNow;
     }
 }
+

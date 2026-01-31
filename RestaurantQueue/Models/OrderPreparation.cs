@@ -2,8 +2,8 @@ namespace RestaurantQueue.Models;
 
 public class OrderPreparation
 {
-    public Guid Id { get; init; }
-    public Guid OrderId { get; init; }
+    public int Id { get; init; }
+    public int OrderId { get; init; }
     public bool Grill { get; init; }
     public bool Salad { get; init; }
     public bool Fries { get; init; }
@@ -13,13 +13,13 @@ public class OrderPreparation
 
     public OrderPreparation()
     {
-        Id = Guid.NewGuid();
+        Id = 0;
         Timestamp = DateTime.UtcNow;
     }
 
-    public OrderPreparation(Guid orderId, bool grill, bool salad, bool fries, bool refill, bool ready)
+    public OrderPreparation(int id, int orderId, bool grill, bool salad, bool fries, bool refill, bool ready)
     {
-        Id = Guid.NewGuid();
+        Id = id;
         OrderId = orderId;
         Grill = grill;
         Salad = salad;
@@ -29,3 +29,4 @@ public class OrderPreparation
         Timestamp = DateTime.UtcNow;
     }
 }
+

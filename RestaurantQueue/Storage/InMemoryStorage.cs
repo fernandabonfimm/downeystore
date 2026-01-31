@@ -1,14 +1,15 @@
 using System.Collections.Concurrent;
 using RestaurantQueue.Models;
+using RestaurantQueue.Utils;
 
 namespace RestaurantQueue.Storage;
 
 public class InMemoryStorage : IStorage
 {
-    private readonly ConcurrentDictionary<Guid, Product> _products = new();
-    private readonly ConcurrentDictionary<Guid, Consumer> _consumers = new();
-    private readonly ConcurrentDictionary<Guid, Order> _orders = new();
-    private readonly ConcurrentDictionary<Guid, Payment> _payments = new();
+    private readonly ConcurrentDictionary<int, Product> _products = new();
+    private readonly ConcurrentDictionary<int, Consumer> _consumers = new();
+    private readonly ConcurrentDictionary<int, Order> _orders = new();
+    private readonly ConcurrentDictionary<int, Payment> _payments = new();
     private readonly ConcurrentBag<OrderPreparation> _orderPreparations = new();
 
     public InMemoryStorage()
@@ -20,16 +21,14 @@ public class InMemoryStorage : IStorage
     {
         var products = new List<Product>
         {
-            new(Guid.NewGuid(), "Big Mac", 5.99m, "product"),
-            new(Guid.NewGuid(), "hamburguer", 2.50m, "grill"),
-            
-            new(Guid.NewGuid(), "tomato", 0.50m, "salad"),
-            new(Guid.NewGuid(), "pickles", 0.30m, "salad"),
-            
-            new(Guid.NewGuid(), "medium fries", 2.49m, "fries"),
-            new(Guid.NewGuid(), "large fries", 3.49m, "fries"),
-            
-            new(Guid.NewGuid(), "medium refill", 1.99m, "refill")
+            new(IdGenerator.NextProductId(), "Big Mac", 5.99m, "Lanche"),
+            new(IdGenerator.NextProductId(), "Hamburguer", 2.50m, "Grelha"),
+            new(IdGenerator.NextProductId(), "Alface", 0.50m, "Salada"),
+            new(IdGenerator.NextProductId(), "Tomate", 0.50m, "Salada"),
+            new(IdGenerator.NextProductId(), "Picles", 0.30m, "Salada"),
+            new(IdGenerator.NextProductId(), "Batata Media", 2.49m, "Fritas"),
+            new(IdGenerator.NextProductId(), "Batata Grande", 3.49m, "Fritas"),
+            new(IdGenerator.NextProductId(), "Refil Coca Cola", 1.99m, "Bebida")
         };
 
         foreach (var product in products)
@@ -43,7 +42,7 @@ public class InMemoryStorage : IStorage
         _products.TryAdd(product.Id, product);
     }
 
-    public Product? GetProduct(Guid id)
+    public Product? GetProduct(int id)
     {
         _products.TryGetValue(id, out var product);
         return product;
@@ -59,7 +58,7 @@ public class InMemoryStorage : IStorage
         _consumers.TryAdd(consumer.Id, consumer);
     }
 
-    public Consumer? GetConsumer(Guid id)
+    public Consumer? GetConsumer(int id)
     {
         _consumers.TryGetValue(id, out var consumer);
         return consumer;
@@ -75,7 +74,7 @@ public class InMemoryStorage : IStorage
         _orders.TryAdd(order.Id, order);
     }
 
-    public Order? GetOrder(Guid id)
+    public Order? GetOrder(int id)
     {
         _orders.TryGetValue(id, out var order);
         return order;
@@ -91,7 +90,7 @@ public class InMemoryStorage : IStorage
         _payments.TryAdd(payment.Id, payment);
     }
 
-    public Payment? GetPayment(Guid id)
+    public Payment? GetPayment(int id)
     {
         _payments.TryGetValue(id, out var payment);
         return payment;
@@ -107,7 +106,7 @@ public class InMemoryStorage : IStorage
         _orderPreparations.Add(preparation);
     }
 
-    public OrderPreparation? GetLatestOrderPreparation(Guid orderId)
+    public OrderPreparation? GetLatestOrderPreparation(int orderId)
     {
         return _orderPreparations
             .Where(p => p.OrderId == orderId)
@@ -115,7 +114,7 @@ public class InMemoryStorage : IStorage
             .FirstOrDefault();
     }
 
-    public IReadOnlyList<OrderPreparation> GetOrderPreparationHistory(Guid orderId)
+    public IReadOnlyList<OrderPreparation> GetOrderPreparationHistory(int orderId)
     {
         return _orderPreparations
             .Where(p => p.OrderId == orderId)

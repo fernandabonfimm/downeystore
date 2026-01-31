@@ -34,7 +34,7 @@ public class DowneyStoreController : ControllerBase
     }
 
     [HttpGet("order/{id}")]
-    public ActionResult<OrderResponse> GetOrder(Guid id)
+    public ActionResult<OrderResponse> GetOrder(int id)
     {
         var order = _orderService.GetOrder(id);
         if (order == null)
@@ -128,7 +128,7 @@ public class DowneyStoreController : ControllerBase
     }
 
     [HttpGet("preparation/status/{orderId}")]
-    public ActionResult<OrderPreparationResponse> GetPreparationStatus(Guid orderId)
+    public ActionResult<OrderPreparationResponse> GetPreparationStatus(int orderId)
     {
         var status = _preparationService.GetCurrentStatus(orderId);
         if (status == null)
@@ -138,7 +138,7 @@ public class DowneyStoreController : ControllerBase
     }
 
     [HttpGet("preparation/history/{orderId}")]
-    public ActionResult<IReadOnlyList<OrderPreparationResponse>> GetPreparationHistory(Guid orderId)
+    public ActionResult<IReadOnlyList<OrderPreparationResponse>> GetPreparationHistory(int orderId)
     {
         var history = _preparationService.GetPreparationHistory(orderId);
         return Ok(history);

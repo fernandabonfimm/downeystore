@@ -7,9 +7,10 @@ public record CreateProductRequest(
 );
 
 public record ProductResponse(
-    Guid Id,
+    int Id,
     string Name,
     decimal Price,
     string Category,
     DateTime CreatedAt
 );
+

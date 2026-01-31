@@ -1,6 +1,7 @@
 using RestaurantQueue.Models;
 using RestaurantQueue.Models.DTOs;
 using RestaurantQueue.Storage;
+using RestaurantQueue.Utils;
 
 namespace RestaurantQueue.Services;
 
@@ -35,13 +36,14 @@ public class OrderService : IOrderService
 
         var totalAmount = products.Sum(p => p.Price);
 
-        var consumer = new Consumer(request.ConsumerName, request.PaymentMethod);
+        var consumer = new Consumer(IdGenerator.NextConsumerId(), request.ConsumerName, request.PaymentMethod);
         _storage.AddConsumer(consumer);
 
-        var payment = new Payment(request.PaymentMethod, totalAmount);
+        var payment = new Payment(IdGenerator.NextPaymentId(), request.PaymentMethod, totalAmount);
         _storage.AddPayment(payment);
 
         var order = new Order(
+            IdGenerator.NextOrderId(),
             consumer.Id,
             request.ProductIds.AsReadOnly(),
             totalAmount,
@@ -52,7 +54,7 @@ public class OrderService : IOrderService
         return MapToOrderResponse(order, consumer, products, payment);
     }
 
-    public OrderResponse? GetOrder(Guid orderId)
+    public OrderResponse? GetOrder(int orderId)
     {
         var order = _storage.GetOrder(orderId);
         if (order == null)
@@ -111,7 +113,7 @@ public class OrderService : IOrderService
             throw new ArgumentException($"Invalid category. Valid categories are: {string.Join(", ", validCategories)}", nameof(request.Category));
 
         var product = new Product(
-            Guid.NewGuid(),
+            IdGenerator.NextProductId(),
             request.Name,
             request.Price,
             request.Category

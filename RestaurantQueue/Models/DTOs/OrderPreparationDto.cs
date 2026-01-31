@@ -1,13 +1,13 @@
 namespace RestaurantQueue.Models.DTOs;
 
 public record UpdateStationRequest(
-    Guid OrderId,
+    int OrderId,
     string Station
 );
 
 public record OrderPreparationResponse(
-    Guid Id,
-    Guid OrderId,
+    int Id,
+    int OrderId,
     bool Grill,
     bool Salad,
     bool Fries,
@@ -15,3 +15,4 @@ public record OrderPreparationResponse(
     bool Ready,
     DateTime Timestamp
 );
+

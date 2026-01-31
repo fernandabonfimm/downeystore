@@ -1,7 +1,7 @@
 namespace RestaurantQueue.Models.DTOs;
 
 public record OrderResponse(
-    Guid OrderId,
+    int OrderId,
     string ConsumerName,
     List<ProductDetail> Products,
     decimal TotalAmount,
@@ -11,8 +11,9 @@ public record OrderResponse(
 );
 
 public record ProductDetail(
-    Guid Id,
+    int Id,
     string Name,
     decimal Price,
     string Category
 );
+

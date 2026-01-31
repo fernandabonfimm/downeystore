@@ -76,10 +76,24 @@ Todos os endpoints são acessados através do controlador DowneyStore, que centr
 {
   "consumerName": "Fernanda Bonfim Santos",
   "paymentMethod": "Debit Card",
-  "productIds": [
-    "guid-do-produto-1",
-    "guid-do-produto-2"
-  ]
+  "productIds": [1, 6, 8]
+}
+```
+
+**Exemplo de Resposta:**
+```json
+{
+  "orderId": 1,
+  "consumerName": "Fernanda Bonfim Santos",
+  "products": [
+    {"id": 1, "name": "Big Mac", "price": 5.99, "category": "Lanche"},
+    {"id": 6, "name": "Batata Media", "price": 2.49, "category": "Fritas"},
+    {"id": 8, "name": "Refil Coca Cola", "price": 1.99, "category": "Bebida"}
+  ],
+  "totalAmount": 10.47,
+  "paymentMethod": "Debit Card",
+  "createdAt": "2026-01-31T10:00:00Z",
+  "status": "Pending"
 }
 ```
 
@@ -113,7 +127,7 @@ Resposta de sucesso:
 **POST** `/api/restaurant/downeystore/preparation/grill` - Marcar grelha como concluída
 ```json
 {
-  "orderId": "guid-do-pedido",
+  "orderId": 1,
   "station": "grill"
 }
 ```
@@ -121,7 +135,7 @@ Resposta de sucesso:
 **POST** `/api/restaurant/downeystore/preparation/salad` - Marcar salada como concluída
 ```json
 {
-  "orderId": "guid-do-pedido",
+  "orderId": 1,
   "station": "salad"
 }
 ```
@@ -129,7 +143,7 @@ Resposta de sucesso:
 **POST** `/api/restaurant/downeystore/preparation/fries` - Marcar fritas como concluída
 ```json
 {
-  "orderId": "guid-do-pedido",
+  "orderId": 1,
   "station": "fries"
 }
 ```
@@ -137,7 +151,7 @@ Resposta de sucesso:
 **POST** `/api/restaurant/downeystore/preparation/refill` - Marcar refil como concluído
 ```json
 {
-  "orderId": "guid-do-pedido",
+  "orderId": 1,
   "station": "refill"
 }
 ```
@@ -149,13 +163,13 @@ Resposta de sucesso:
 **POST** `/api/restaurant/downeystore/deliver` - Entregar pedido ao cliente
 ```json
 {
-  "orderId": "guid-do-pedido"
+  "orderId": 1
 }
 ```
 Resposta de sucesso:
 ```json
 {
-  "orderId": "guid-do-pedido",
+  "orderId": 1,
   "isReady": true,
   "message": "Enjoy your meal!",
   "deliveredAt": "2026-01-30T20:45:00Z"
@@ -164,23 +178,24 @@ Resposta de sucesso:
 
 ### Produtos Pré-cadastrados
 
-O sistema já vem com os seguintes produtos cadastrados:
+O sistema já vem com os seguintes produtos cadastrados (IDs fixos):
 
-**Lanches (Produtos Finais):**
+**ID 1 - Lanches:**
 - Big Mac - $5.99
 
-**Grelha (Carnes):**
+**ID 2 - Grelha (Carnes):**
 - Hamburguer - $2.50
 
-**Salada (Ingredientes):**
-- Tomate - $0.50
-- Picles - $0.30
+**IDs 3-5 - Salada (Ingredientes):**
+- 3: Alface - $0.50
+- 4: Tomate - $0.50
+- 5: Picles - $0.30
 
-**Fritas:**
-- Batata Media - $2.49
-- Batata Grande - $3.49
+**IDs 6-7 - Fritas:**
+- 6: Batata Media - $2.49
+- 7: Batata Grande - $3.49
 
-**Bebidas:**
+**ID 8 - Bebidas:**
 - Refil Coca Cola - $1.99
 
 ## Executar o Projeto

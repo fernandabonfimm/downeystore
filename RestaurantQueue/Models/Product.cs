@@ -2,17 +2,17 @@ namespace RestaurantQueue.Models;
 
 public class Product
 {
-    public Guid Id { get; init; }
+    public int Id { get; init; }
     public string Name { get; init; } = string.Empty;
     public decimal Price { get; init; }
     public string Category { get; init; } = string.Empty;
 
     public Product()
     {
-        Id = Guid.NewGuid();
+        Id = 0;
     }
 
-    public Product(Guid id, string name, decimal price, string category)
+    public Product(int id, string name, decimal price, string category)
     {
         Id = id;
         Name = name;
@@ -20,3 +20,4 @@ public class Product
         Category = category;
     }
 }
+

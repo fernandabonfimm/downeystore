@@ -1,12 +1,13 @@
 namespace RestaurantQueue.Models.DTOs;
 
 public record DeliverOrderRequest(
-    Guid OrderId
+    int OrderId
 );
 
 public record DeliverOrderResponse(
-    Guid OrderId,
+    int OrderId,
     bool IsReady,
     string Message,
     DateTime DeliveredAt
 );
+

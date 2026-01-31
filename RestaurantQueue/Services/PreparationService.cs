@@ -1,6 +1,7 @@
 using RestaurantQueue.Models;
 using RestaurantQueue.Models.DTOs;
 using RestaurantQueue.Storage;
+using RestaurantQueue.Utils;
 
 namespace RestaurantQueue.Services;
 
@@ -13,13 +14,14 @@ public class PreparationService : IPreparationService
         _storage = storage;
     }
 
-    public OrderPreparationResponse StartPreparation(Guid orderId)
+    public OrderPreparationResponse StartPreparation(int orderId)
     {
         var order = _storage.GetOrder(orderId);
         if (order == null)
             throw new ArgumentException($"Order with ID {orderId} not found");
 
         var preparation = new OrderPreparation(
+            IdGenerator.NextPreparationId(),
             orderId,
             grill: false,
             salad: false,
@@ -33,7 +35,7 @@ public class PreparationService : IPreparationService
         return MapToResponse(preparation);
     }
 
-    public OrderPreparationResponse UpdateStation(Guid orderId, string station)
+    public OrderPreparationResponse UpdateStation(int orderId, string station)
     {
         var order = _storage.GetOrder(orderId);
         if (order == null)
@@ -48,6 +50,7 @@ public class PreparationService : IPreparationService
         var newPreparation = station.ToLower() switch
         {
             "grill" => new OrderPreparation(
+                IdGenerator.NextPreparationId(),
                 orderId,
                 grill: true,
                 salad: currentPreparation.Salad,
@@ -56,6 +59,7 @@ public class PreparationService : IPreparationService
                 ready: false
             ),
             "salad" => new OrderPreparation(
+                IdGenerator.NextPreparationId(),
                 orderId,
                 grill: currentPreparation.Grill,
                 salad: true,
@@ -64,6 +68,7 @@ public class PreparationService : IPreparationService
                 ready: false
             ),
             "fries" => new OrderPreparation(
+                IdGenerator.NextPreparationId(),
                 orderId,
                 grill: currentPreparation.Grill,
                 salad: currentPreparation.Salad,
@@ -72,6 +77,7 @@ public class PreparationService : IPreparationService
                 ready: false
             ),
             "refill" => new OrderPreparation(
+                IdGenerator.NextPreparationId(),
                 orderId,
                 grill: currentPreparation.Grill,
                 salad: currentPreparation.Salad,
@@ -90,6 +96,7 @@ public class PreparationService : IPreparationService
         if (isReady)
         {
             newPreparation = new OrderPreparation(
+                IdGenerator.NextPreparationId(),
                 orderId,
                 grill: newPreparation.Grill,
                 salad: newPreparation.Salad,
@@ -104,19 +111,19 @@ public class PreparationService : IPreparationService
         return MapToResponse(newPreparation);
     }
 
-    public OrderPreparationResponse? GetCurrentStatus(Guid orderId)
+    public OrderPreparationResponse? GetCurrentStatus(int orderId)
     {
         var preparation = _storage.GetLatestOrderPreparation(orderId);
         return preparation == null ? null : MapToResponse(preparation);
     }
 
-    public IReadOnlyList<OrderPreparationResponse> GetPreparationHistory(Guid orderId)
+    public IReadOnlyList<OrderPreparationResponse> GetPreparationHistory(int orderId)
     {
         var history = _storage.GetOrderPreparationHistory(orderId);
         return history.Select(MapToResponse).ToList().AsReadOnly();
     }
 
-    public bool IsOrderReady(Guid orderId)
+    public bool IsOrderReady(int orderId)
     {
         var latestPreparation = _storage.GetLatestOrderPreparation(orderId);
         return latestPreparation?.Ready ?? false;

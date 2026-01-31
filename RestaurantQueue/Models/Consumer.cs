@@ -2,19 +2,20 @@ namespace RestaurantQueue.Models;
 
 public class Consumer
 {
-    public Guid Id { get; init; }
+    public int Id { get; init; }
     public string Name { get; init; } = string.Empty;
     public string PaymentMethod { get; init; } = string.Empty;
 
     public Consumer()
     {
-        Id = Guid.NewGuid();
+        Id = 0;
     }
 
-    public Consumer(string name, string paymentMethod)
+    public Consumer(int id, string name, string paymentMethod)
     {
-        Id = Guid.NewGuid();
+        Id = id;
         Name = name;
         PaymentMethod = paymentMethod;
     }
 }
+

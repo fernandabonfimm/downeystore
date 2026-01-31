@@ -5,10 +5,11 @@ namespace RestaurantQueue.Services;
 
 public interface IPreparationService
 {
-    OrderPreparationResponse StartPreparation(Guid orderId);
-    OrderPreparationResponse UpdateStation(Guid orderId, string station);
-    OrderPreparationResponse? GetCurrentStatus(Guid orderId);
-    IReadOnlyList<OrderPreparationResponse> GetPreparationHistory(Guid orderId);
-    bool IsOrderReady(Guid orderId);
+    OrderPreparationResponse StartPreparation(int orderId);
+    OrderPreparationResponse UpdateStation(int orderId, string station);
+    OrderPreparationResponse? GetCurrentStatus(int orderId);
+    IReadOnlyList<OrderPreparationResponse> GetPreparationHistory(int orderId);
+    bool IsOrderReady(int orderId);
 }
+
 
