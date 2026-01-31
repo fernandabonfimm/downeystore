@@ -7,12 +7,12 @@ Este projeto é inspirado na loja de Downey na Califórnia, que permanece pratic
 ## Áreas da Cozinha
 
 O sistema gerencia pedidos através das seguintes estações de trabalho:
+- **Grelha**: Preparação das carnes (hambúrgueres)
+- **Salada**: Preparação dos ingredientes frescos (tomate, picles)
 - **Fritas**: Preparação de batatas fritas
-- **Grelha**: Preparação dos hambúrgueres
-- **Salada**: Montagem dos ingredientes (alface, picles, tomate)
 - **Bebida**: Preparação das bebidas
 
-Cada pedido passa pelas estações necessárias até chegar ao consumidor final.
+Os **Lanches** (como Big Mac) são produtos finais que passam por várias estações até ficarem prontos.
 
 ## Boas Práticas Implementadas
 
@@ -94,10 +94,10 @@ Todos os endpoints são acessados através do controlador DowneyStore, que centr
 {
   "name": "McChicken",
   "price": 4.99,
-  "category": "Grelha"
+  "category": "Lanche"
 }
 ```
-Categorias válidas: `Grelha`, `Fritas`, `Bebida`, `Salada`
+Categorias válidas: `Lanche`, `Grelha`, `Salada`, `Fritas`, `Bebida`
 
 Resposta de sucesso:
 ```json
@@ -165,10 +165,23 @@ Resposta de sucesso:
 ### Produtos Pré-cadastrados
 
 O sistema já vem com os seguintes produtos cadastrados:
-- Big Mac - $5.99 (Grelha)
-- Batata Media - $2.49 (Fritas)
-- Batata Grande - $3.49 (Fritas)
-- Refil Coca Cola - $1.99 (Bebida)
+
+**Lanches (Produtos Finais):**
+- Big Mac - $5.99
+
+**Grelha (Carnes):**
+- Hamburguer - $2.50
+
+**Salada (Ingredientes):**
+- Tomate - $0.50
+- Picles - $0.30
+
+**Fritas:**
+- Batata Media - $2.49
+- Batata Grande - $3.49
+
+**Bebidas:**
+- Refil Coca Cola - $1.99
 
 ## Executar o Projeto
 

@@ -20,10 +20,16 @@ public class InMemoryStorage : IStorage
     {
         var products = new List<Product>
         {
-            new(Guid.NewGuid(), "Big Mac", 5.99m, "Grelha"),
-            new(Guid.NewGuid(), "Batata Media", 2.49m, "Fritas"),
-            new(Guid.NewGuid(), "Batata Grande", 3.49m, "Fritas"),
-            new(Guid.NewGuid(), "Refil Coca Cola", 1.99m, "Bebida")
+            new(Guid.NewGuid(), "Big Mac", 5.99m, "product"),
+            new(Guid.NewGuid(), "hamburguer", 2.50m, "grill"),
+            
+            new(Guid.NewGuid(), "tomato", 0.50m, "salad"),
+            new(Guid.NewGuid(), "pickles", 0.30m, "salad"),
+            
+            new(Guid.NewGuid(), "medium fries", 2.49m, "fries"),
+            new(Guid.NewGuid(), "large fries", 3.49m, "fries"),
+            
+            new(Guid.NewGuid(), "medium refill", 1.99m, "refill")
         };
 
         foreach (var product in products)

@@ -106,7 +106,7 @@ public class OrderService : IOrderService
         if (string.IsNullOrWhiteSpace(request.Category))
             throw new ArgumentException("Product category is required", nameof(request.Category));
 
-        var validCategories = new[] { "Grelha", "Fritas", "Bebida", "Salada" };
+        var validCategories = new[] { "Lanche", "Grelha", "Fritas", "Bebida", "Salada" };
         if (!validCategories.Contains(request.Category, StringComparer.OrdinalIgnoreCase))
             throw new ArgumentException($"Invalid category. Valid categories are: {string.Join(", ", validCategories)}", nameof(request.Category));
 
